@@ -63,7 +63,6 @@ public class Сalculator {
                 result = Double.MAX_VALUE;
             }else {result = data.getX() * data.getY();}
         }
-        System.out.println(currentDouble);
         return result;
     }
 }
