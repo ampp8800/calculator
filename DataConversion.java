@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 
 class DataConversion {
     private double x;
@@ -8,10 +9,15 @@ class DataConversion {
             String strData[] = str.split(" ");
             if (strData.length>3){throw new Exception();}
             if (!strData[1].equals("+") && !strData[1].equals("-") && !strData[1].equals("*") && !strData[1].equals("/")){throw new Exception();}
-            if (Long.parseLong(strData[0]) > Float.MAX_VALUE || Long.parseLong(strData[2]) > Float.MAX_VALUE){throw new Exception();}
             this.x = Double.parseDouble(strData[0]);
             this.op = strData[1];
             this.y = Double.parseDouble(strData[2]);
+            BigDecimal currentDouble1 = new BigDecimal(strData[0]);
+            BigDecimal currentDouble2 = new BigDecimal(strData[2]);
+            BigDecimal maxDouble = new BigDecimal(Double.MAX_VALUE);
+            if (currentDouble1.compareTo(maxDouble) == 1){throw new Exception();}
+            if (currentDouble2.compareTo(maxDouble) == 1){throw new Exception();}
+
         }catch (Exception unused){
             System.out.println("Invalid input string format, re-enter expression");
             this.op = "error";
