@@ -16,7 +16,6 @@ public class Сalculator {
                         System.out.println(new Transformation(calculation(data)).getResult());
                         break;
                     }
-
                 }
                 while (true) {
                     System.out.println("proceed? (y/n)");
@@ -32,37 +31,35 @@ public class Сalculator {
             }
 
         } catch (IOException unused) {}
-
-
     }
-    static Double calculation  (DataConversion data){
-        double result = 37;
+    static BigDecimal calculation  (DataConversion data){
         BigDecimal maxDouble = new BigDecimal(Double.MAX_VALUE);
         BigDecimal currentDouble = null;
         if (data.getOp().equals("-")){
             currentDouble = new BigDecimal(data.getX() - data.getY());
             if (currentDouble.compareTo(maxDouble) == 1){
-                result = Double.MAX_VALUE;
-            }else {result = data.getX() - data.getY();}
+                currentDouble.add(BigDecimal.valueOf(Double.MAX_VALUE));
+            }
         }
         if (data.getOp().equals("+")){
             currentDouble = new BigDecimal(data.getX() + data.getY());
             if (currentDouble.compareTo(maxDouble) == 1){
-                result = Double.MAX_VALUE;
-            }else {result = data.getX() + data.getY();}
+                currentDouble.add(BigDecimal.valueOf(Double.MAX_VALUE));
+            }
         }
         if (data.getOp().equals("/")){
             currentDouble = new BigDecimal(data.getX() / data.getY());
             if (currentDouble.compareTo(maxDouble) == 1){
-                result = Double.MAX_VALUE;
-            }else {result = data.getX() / data.getY();}
+                currentDouble.add(BigDecimal.valueOf(Double.MAX_VALUE));
+            }
         }
         if (data.getOp().equals("*")){
             currentDouble = new BigDecimal(data.getX() * data.getY());
             if (currentDouble.compareTo(maxDouble) == 1){
-                result = Double.MAX_VALUE;
-            }else {result = data.getX() * data.getY();}
+                currentDouble.add(BigDecimal.valueOf(Double.MAX_VALUE));
+            }
         }
-        return result;
+
+        return currentDouble;
     }
 }
