@@ -39,11 +39,7 @@ public class Сalculator {
         if (data.getOp().equals("-")){ result = data.getX() - data.getY();}
         if (data.getOp().equals("+")){ result = data.getX() + data.getY();}
         if (data.getOp().equals("/")){ result = data.getX() / data.getY();}
-        if (data.getOp().equals("*")){ 
-            result = data.getX() * data.getY();
-            maxResult = (Long) data.getX() * data.getY();
-            if (maxResult > Float.MAX_VALUE) result = Float.MAX_VALUE;
-        }
+        if (data.getOp().equals("*")){ result = data.getX() * data.getY();}
         return result;
     }
 
