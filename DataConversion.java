@@ -8,6 +8,7 @@ class DataConversion {
             String strData[] = str.split(" ");
             if (strData.length>3){throw new Exception();}
             if (!strData[1].equals("+") && !strData[1].equals("-") && !strData[1].equals("*") && !strData[1].equals("/")){throw new Exception();}
+            if (Long.parseLong(strData[0]) > Float.MAX_VALUE || Long.parseLong(strData[2]) > Float.MAX_VALUE){throw new Exception();}
             this.x = Double.parseDouble(strData[0]);
             this.op = strData[1];
             this.y = Double.parseDouble(strData[2]);
