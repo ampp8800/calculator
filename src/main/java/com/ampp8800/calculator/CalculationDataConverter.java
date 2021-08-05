@@ -1,4 +1,4 @@
-package Calculator;
+package com.ampp8800.calculator;
 
 import java.math.BigDecimal;
 

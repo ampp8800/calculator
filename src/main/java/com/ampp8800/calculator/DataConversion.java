@@ -1,4 +1,4 @@
-package Calculator;
+package com.ampp8800.calculator;
 
 public class DataConversion {
     private double x;
