@@ -5,18 +5,18 @@ import java.math.BigDecimal;
 public class CalculationDataConverter {
 
     DataConversion dataConversion (String str) {
-        double x = 0;
-        double y = 0;
+        BigDecimal x = new BigDecimal(0);
+        BigDecimal y = new BigDecimal(0);
         String op = "";
 
         try{
             String strData[] = str.split(" ");
             if (strData.length>3){throw new Exception();}
             if (!strData[1].equals("+") && !strData[1].equals("-") && !strData[1].equals("*") && !strData[1].equals("/")){throw new Exception();}
-            x = Double.parseDouble(strData[0]);
+            x = new BigDecimal(strData[0]);
             op = strData[1];
-            y = Double.parseDouble(strData[2]);
-            if (y == 0 && op.equals("/")){
+            y = new BigDecimal(strData[2]);
+            if (y.compareTo(new BigDecimal("0")) == 0 && op.equals("/")){
                 System.out.print("Division by zero. ");
                 throw new Exception();
             }

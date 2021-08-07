@@ -1,23 +1,25 @@
 package com.ampp8800.calculator;
 
+import java.math.BigDecimal;
+
 public class DataConversion {
-    private double x;
-    private double y;
+    private BigDecimal x;
+    private BigDecimal y;
     private String op = "";
 
-    public DataConversion(double x, double y, String op) {
-        this.x = x;
-        this.y = y;
+    public DataConversion(BigDecimal x, BigDecimal y, String op) {
+        this.x = new BigDecimal(String.valueOf(x));
+        this.y = new BigDecimal(String.valueOf(y));
         this.op = op;
     }
 
 
 
-    public double getX() {
+    public BigDecimal getX() {
         return x;
     }
 
-    public double getY() {
+    public BigDecimal getY() {
         return y;
     }
 
