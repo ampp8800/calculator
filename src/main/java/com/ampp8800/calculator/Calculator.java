@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Calculator {
 
@@ -61,7 +62,7 @@ public class Calculator {
             }
         }
         if (data.getOp().equals("/")){
-            currentDouble = new BigDecimal(String.valueOf(data.getX().divide(data.getY())));
+            currentDouble = new BigDecimal(String.valueOf(data.getX().divide(data.getY(), 4, RoundingMode.HALF_UP)));
             if (currentDouble.compareTo(maxDouble) == 1){
                 currentDouble.add(BigDecimal.valueOf(Double.MAX_VALUE));
             }

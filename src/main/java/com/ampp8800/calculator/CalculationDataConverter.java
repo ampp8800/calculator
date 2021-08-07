@@ -16,7 +16,7 @@ public class CalculationDataConverter {
             x = new BigDecimal(strData[0]);
             op = strData[1];
             y = new BigDecimal(strData[2]);
-            if (y.compareTo(new BigDecimal("0")) == 0 && op.equals("/")){
+            if (y.compareTo(new BigDecimal(0)) == 0 && op.equals("/")){
                 System.out.print("Division by zero. ");
                 throw new Exception();
             }
