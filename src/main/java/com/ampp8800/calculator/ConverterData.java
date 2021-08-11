@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class ConverterData {
 
-    Data dataConversion(String str) {
+    static Data dataConversion(String str) {
         BigDecimal x = new BigDecimal(0);
         BigDecimal y = new BigDecimal(0);
         String op = "";

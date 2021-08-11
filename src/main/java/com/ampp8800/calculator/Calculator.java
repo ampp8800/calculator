@@ -14,8 +14,7 @@ public class Calculator {
             while (true) {
                 if (newCycle) {
                     System.out.println("Enter data in the format (A op B)");
-                    ConverterData converterData = new ConverterData();
-                    Data data = converterData.dataConversion(reader.readLine());
+                    Data data = ConverterData.dataConversion(reader.readLine());
                     if (!data.getOp().equals("error")) {
                         BigDecimal bigDecimal = calculation(data);
                         bigDecimal = transformation(bigDecimal);
