@@ -9,28 +9,24 @@ import java.math.RoundingMode;
 public class Calculator {
 
     public static void main(String[] args) {
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))){
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             boolean newCycle = true;
             while (true) {
                 if (newCycle) {
-                    System.out.println("enter data in the format (A op B)");
-                    CalculationDataConverter calculationDataConverter = new CalculationDataConverter();
-                    DataConversion data = calculationDataConverter.dataConversion(reader.readLine());
+                    System.out.println("Enter data in the format (A op B)");
+                    ConverterData converterData = new ConverterData();
+                    Data data = converterData.dataConversion(reader.readLine());
                     if (!data.getOp().equals("error")) {
                         BigDecimal bigDecimal = calculation(data);
-                        BigDecimal maxDouble = new BigDecimal(Double.MAX_VALUE);
-                        if (bigDecimal.compareTo(maxDouble) == 1) {
-                            System.out.println("out of limits");
-                        } else {
-                            Transformation transformation = new Transformation(bigDecimal);
-                            System.out.println(transformation.getResult());
-                            newCycle = false;
-                        }
+                        bigDecimal = transformation(bigDecimal);
+                        System.out.println(bigDecimal.toPlainString());
+                        newCycle = false;
+
                     }
                 }
 
                 if (!newCycle) {
-                    System.out.println("proceed? (y/n)");
+                    System.out.println("Proceed? (y/n)");
                     String proceed = reader.readLine();
                     if (proceed.equals("n")) {
                         break;
@@ -46,34 +42,30 @@ public class Calculator {
             exception.printStackTrace();
         }
     }
-    static BigDecimal calculation  (DataConversion data){
-        BigDecimal maxDouble = new BigDecimal(Double.MAX_VALUE);
-        BigDecimal currentDouble = null;
-        if (data.getOp().equals("-")){
-            currentDouble = new BigDecimal(String.valueOf(data.getX().subtract(data.getY())));
-            if (currentDouble.compareTo(maxDouble) == 1){
-                currentDouble.add(BigDecimal.valueOf(Double.MAX_VALUE));
-            }
+
+    static BigDecimal calculation(Data data) {
+        BigDecimal currentData = null;
+
+        if (data.getOp().equals("-")) {
+            currentData = new BigDecimal(String.valueOf(data.getX().subtract(data.getY())));
         }
-        if (data.getOp().equals("+")){
-            currentDouble = new BigDecimal(String.valueOf(data.getX().add(data.getY())));
-            if (currentDouble.compareTo(maxDouble) == 1){
-                currentDouble.add(BigDecimal.valueOf(Double.MAX_VALUE));
-            }
+        if (data.getOp().equals("+")) {
+            currentData = new BigDecimal(String.valueOf(data.getX().add(data.getY())));
         }
-        if (data.getOp().equals("/")){
-            currentDouble = new BigDecimal(String.valueOf(data.getX().divide(data.getY(), 4, RoundingMode.HALF_UP)));
-            if (currentDouble.compareTo(maxDouble) == 1){
-                currentDouble.add(BigDecimal.valueOf(Double.MAX_VALUE));
-            }
+        if (data.getOp().equals("/")) {
+            currentData = new BigDecimal(String.valueOf(data.getX().divide(data.getY(), 9, RoundingMode.HALF_UP)));
         }
-        if (data.getOp().equals("*")){
-            currentDouble = new BigDecimal(String.valueOf(data.getX().multiply(data.getY())));
-            if (currentDouble.compareTo(maxDouble) == 1){
-                currentDouble.add(BigDecimal.valueOf(Double.MAX_VALUE));
-            }
+        if (data.getOp().equals("*")) {
+            currentData = new BigDecimal(String.valueOf(data.getX().multiply(data.getY())));
         }
 
-        return currentDouble;
+        return currentData;
+    }
+
+    static BigDecimal transformation(BigDecimal data) {
+
+        int FRACTION = 4;
+        data = data.setScale(FRACTION, RoundingMode.HALF_UP).stripTrailingZeros();
+        return data;
     }
 }

@@ -2,17 +2,16 @@ package com.ampp8800.calculator;
 
 import java.math.BigDecimal;
 
-public class DataConversion {
+class Data {
     private BigDecimal x;
     private BigDecimal y;
     private String op = "";
 
-    public DataConversion(BigDecimal x, BigDecimal y, String op) {
+    public Data(BigDecimal x, BigDecimal y, String op) {
         this.x = new BigDecimal(String.valueOf(x));
         this.y = new BigDecimal(String.valueOf(y));
         this.op = op;
     }
-
 
 
     public BigDecimal getX() {
