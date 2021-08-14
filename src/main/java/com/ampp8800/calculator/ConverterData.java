@@ -25,7 +25,14 @@ public class ConverterData {
                     System.out.println("Invalid input string format, re-enter expression");
                     op = "error";
                 }
-            } else {
+            } else if (strData.length == 1){
+                if (strData[0].lastIndexOf('!') == (strData[0].length()-1)){
+
+                }else{
+                    System.out.println("Invalid input string format, re-enter expression");
+                    op = "error";
+                }
+            }else {
                 System.out.println("Invalid input string format, re-enter expression");
                 op = "error";
             }
