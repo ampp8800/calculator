@@ -22,26 +22,31 @@ public class ConverterData {
                     }
 
                 } else {
-                    System.out.println("Invalid input string format, re-enter expression");
                     op = "error";
                 }
-            } else if (strData.length == 1){
-                if (strData[0].lastIndexOf('!') == (strData[0].length()-1)){
+            } else if (strData.length == 1) {
+                if (strData[0].lastIndexOf('!') == (strData[0].length() - 1)) {
+                    op = "!";
+                    strData[0] = strData[0].substring(0, strData[0].length() - 1);
+                    if (strData[0].indexOf(".") != -1 || strData[0].indexOf("-") != -1) {
+                        op = "error";
+                    } else {
+                        x = new BigDecimal(strData[0]);
+                    }
 
-                }else{
-                    System.out.println("Invalid input string format, re-enter expression");
+                } else {
                     op = "error";
                 }
-            }else {
-                System.out.println("Invalid input string format, re-enter expression");
+            } else {
                 op = "error";
             }
 
         } catch (Exception unused) {
-            System.out.println("Invalid input string format, re-enter expression");
             op = "error";
         }
-
+        if (op.equals("error")) {
+            System.out.println("Invalid input string format, re-enter expression");
+        }
         return new Data(x, y, op);
     }
 

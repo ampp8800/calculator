@@ -13,7 +13,7 @@ public class Calculator {
             boolean newCycle = true;
             while (true) {
                 if (newCycle) {
-                    System.out.println("Enter data in the format (A op B)");
+                    System.out.println("Enter data in the format (A op B) or (A!)");
                     Data data = ConverterData.dataConversion(reader.readLine());
                     if (!data.getOp().equals("error")) {
                         BigDecimal bigDecimal = calculation(data);
@@ -32,7 +32,7 @@ public class Calculator {
                     } else if (proceed.equals("y")) {
                         newCycle = true;
                     } else {
-                        System.out.println("incorrect input");
+                        System.out.println("Incorrect input");
                     }
                 }
             }
@@ -56,6 +56,12 @@ public class Calculator {
         }
         if (data.getOp().equals("*")) {
             currentData = new BigDecimal(String.valueOf(data.getX().multiply(data.getY())));
+        }
+        if (data.getOp().equals("!")){
+            currentData = new BigDecimal(1);
+            for (int i = data.getX().intValue(); i>0; i--){
+                currentData = currentData.multiply(BigDecimal.valueOf(i));
+            }
         }
 
         return currentData;
