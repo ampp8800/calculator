@@ -57,11 +57,8 @@ public class Calculator {
         if (data.getOp().equals("*")) {
             currentData = new BigDecimal(String.valueOf(data.getX().multiply(data.getY())));
         }
-        if (data.getOp().equals("!")){
-            currentData = new BigDecimal(1);
-            for (int i = data.getX().intValue(); i>0; i--){
-                currentData = currentData.multiply(BigDecimal.valueOf(i));
-            }
+        if (data.getOp().equals("!")) {
+            currentData = calculateFactorial(data.getX());
         }
 
         return currentData;
@@ -72,5 +69,13 @@ public class Calculator {
         int FRACTION = 4;
         data = data.setScale(FRACTION, RoundingMode.HALF_UP).stripTrailingZeros();
         return data;
+    }
+
+    static BigDecimal calculateFactorial(BigDecimal bigDecimal) {
+        BigDecimal currentData = new BigDecimal(1);
+        for (int i = bigDecimal.intValue(); i > 0; i--) {
+            currentData = currentData.multiply(BigDecimal.valueOf(i));
+        }
+        return currentData;
     }
 }

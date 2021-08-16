@@ -13,6 +13,15 @@ class Data {
         this.op = op;
     }
 
+    public Data(BigDecimal x, String op) {
+        this.x = x;
+        this.op = op;
+    }
+
+    public Data(String op) {
+        this.op = op;
+    }
+
 
     public BigDecimal getX() {
         return x;
