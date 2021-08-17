@@ -45,19 +45,19 @@ public class Calculator {
     static BigDecimal calculation(Data data) {
         BigDecimal currentData = null;
 
-        if (data.getOp().equals("-")) {
+        if (data.getOp().equals(ConverterData.Procedure.SUB.getProcedure())) {
             currentData = new BigDecimal(String.valueOf(data.getX().subtract(data.getY())));
         }
-        if (data.getOp().equals("+")) {
+        if (data.getOp().equals(ConverterData.Procedure.SUM.getProcedure())) {
             currentData = new BigDecimal(String.valueOf(data.getX().add(data.getY())));
         }
-        if (data.getOp().equals("/")) {
+        if (data.getOp().equals(ConverterData.Procedure.DIV.getProcedure())) {
             currentData = new BigDecimal(String.valueOf(data.getX().divide(data.getY(), 9, RoundingMode.HALF_UP)));
         }
-        if (data.getOp().equals("*")) {
+        if (data.getOp().equals(ConverterData.Procedure.MUL.getProcedure())) {
             currentData = new BigDecimal(String.valueOf(data.getX().multiply(data.getY())));
         }
-        if (data.getOp().equals("!")) {
+        if (data.getOp().equals(ConverterData.Procedure.FAC.getProcedure())) {
             currentData = calculateFactorial(data.getX());
         }
 
@@ -72,10 +72,25 @@ public class Calculator {
     }
 
     static BigDecimal calculateFactorial(BigDecimal bigDecimal) {
-        BigDecimal currentData = new BigDecimal(1);
-        for (int i = bigDecimal.intValue(); i > 0; i--) {
-            currentData = currentData.multiply(BigDecimal.valueOf(i));
+        if (bigDecimal.compareTo(BigDecimal.valueOf(0)) == 0) {
+            bigDecimal = new BigDecimal(1);
+        } else {
+            bigDecimal = recursion(bigDecimal);
         }
-        return currentData;
+        return bigDecimal;
+    }
+
+    static BigDecimal recursion(BigDecimal bigDecimal) {
+
+        BigDecimal counter = new BigDecimal(String.valueOf(bigDecimal));
+
+        if (counter.compareTo(BigDecimal.valueOf(1)) > 0) {
+            counter = new BigDecimal(String.valueOf(counter.subtract(new BigDecimal(1))));
+            counter = recursion(counter);
+            bigDecimal = new BigDecimal(String.valueOf(bigDecimal.multiply(counter)));
+        }
+        return bigDecimal;
     }
 }
+
+
