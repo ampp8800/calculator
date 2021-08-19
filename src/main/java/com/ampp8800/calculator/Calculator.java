@@ -15,7 +15,7 @@ public class Calculator {
                 if (newCycle) {
                     System.out.println("Enter data in the format (A op B) or (A!)");
                     Data data = ConverterData.dataConversion(reader.readLine());
-                    if (!data.getOp().equals("error")) {
+                    if (!data.getOp().equals(ConverterData.Procedure.ERROR)) {
                         BigDecimal bigDecimal = calculation(data);
                         bigDecimal = transformation(bigDecimal);
                         System.out.println(bigDecimal.toPlainString());
@@ -45,19 +45,19 @@ public class Calculator {
     static BigDecimal calculation(Data data) {
         BigDecimal currentData = null;
 
-        if (data.getOp().equals(ConverterData.Procedure.SUB.getProcedure())) {
+        if (data.getOp().equals(ConverterData.Procedure.SUB)) {
             currentData = new BigDecimal(String.valueOf(data.getX().subtract(data.getY())));
         }
-        if (data.getOp().equals(ConverterData.Procedure.SUM.getProcedure())) {
+        if (data.getOp().equals(ConverterData.Procedure.SUM)) {
             currentData = new BigDecimal(String.valueOf(data.getX().add(data.getY())));
         }
-        if (data.getOp().equals(ConverterData.Procedure.DIV.getProcedure())) {
+        if (data.getOp().equals(ConverterData.Procedure.DIV)) {
             currentData = new BigDecimal(String.valueOf(data.getX().divide(data.getY(), 9, RoundingMode.HALF_UP)));
         }
-        if (data.getOp().equals(ConverterData.Procedure.MUL.getProcedure())) {
+        if (data.getOp().equals(ConverterData.Procedure.MUL)) {
             currentData = new BigDecimal(String.valueOf(data.getX().multiply(data.getY())));
         }
-        if (data.getOp().equals(ConverterData.Procedure.FAC.getProcedure())) {
+        if (data.getOp().equals(ConverterData.Procedure.FAC)) {
             currentData = calculateFactorial(data.getX());
         }
 
@@ -72,25 +72,14 @@ public class Calculator {
     }
 
     static BigDecimal calculateFactorial(BigDecimal bigDecimal) {
-        if (bigDecimal.compareTo(BigDecimal.valueOf(0)) == 0) {
-            bigDecimal = new BigDecimal(1);
-        } else {
-            bigDecimal = recursion(bigDecimal);
+        BigDecimal result = new BigDecimal(1);
+        if (bigDecimal.compareTo(BigDecimal.valueOf(1)) < 0) {
+            return result;
         }
-        return bigDecimal;
+        result = new BigDecimal(String.valueOf(bigDecimal.multiply(calculateFactorial(bigDecimal.subtract(BigDecimal.valueOf(1))))));
+        return result;
     }
 
-    static BigDecimal recursion(BigDecimal bigDecimal) {
-
-        BigDecimal counter = new BigDecimal(String.valueOf(bigDecimal));
-
-        if (counter.compareTo(BigDecimal.valueOf(1)) > 0) {
-            counter = new BigDecimal(String.valueOf(counter.subtract(new BigDecimal(1))));
-            counter = recursion(counter);
-            bigDecimal = new BigDecimal(String.valueOf(bigDecimal.multiply(counter)));
-        }
-        return bigDecimal;
-    }
 }
 
 
