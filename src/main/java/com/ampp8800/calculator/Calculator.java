@@ -10,30 +10,16 @@ public class Calculator {
 
     public static void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            boolean newCycle = true;
+            System.out.println("Enter data in the format (A op B) or (A!)");
             while (true) {
-                if (newCycle) {
-                    System.out.println("Enter data in the format (A op B) or (A!)");
-                    Data data = ConverterData.dataConversion(reader.readLine());
-                    if (!data.getOp().equals(ConverterData.Procedure.ERROR)) {
-                        BigDecimal bigDecimal = calculation(data);
-                        bigDecimal = transformation(bigDecimal);
-                        System.out.println(bigDecimal.toPlainString());
-                        newCycle = false;
-
-                    }
-                }
-
-                if (!newCycle) {
-                    System.out.println("Proceed? (y/n)");
-                    String proceed = reader.readLine();
-                    if (proceed.equals("n")) {
+                Data data = ConverterData.dataConversion(reader.readLine());
+                if (!data.getOp().equals(MathematicalFunction.Procedure.ERROR)) {
+                    if (data.getOp().equals(MathematicalFunction.Procedure.EXIT)){
                         break;
-                    } else if (proceed.equals("y")) {
-                        newCycle = true;
-                    } else {
-                        System.out.println("Incorrect input");
                     }
+                    BigDecimal bigDecimal = calculation(data);
+                    bigDecimal = transformation(bigDecimal);
+                    System.out.println(bigDecimal.toPlainString());
                 }
             }
 
@@ -45,19 +31,19 @@ public class Calculator {
     static BigDecimal calculation(Data data) {
         BigDecimal currentData = null;
 
-        if (data.getOp().equals(ConverterData.Procedure.SUB)) {
+        if (data.getOp().equals(MathematicalFunction.Procedure.SUB)) {
             currentData = new BigDecimal(String.valueOf(data.getX().subtract(data.getY())));
         }
-        if (data.getOp().equals(ConverterData.Procedure.SUM)) {
+        if (data.getOp().equals(MathematicalFunction.Procedure.SUM)) {
             currentData = new BigDecimal(String.valueOf(data.getX().add(data.getY())));
         }
-        if (data.getOp().equals(ConverterData.Procedure.DIV)) {
+        if (data.getOp().equals(MathematicalFunction.Procedure.DIV)) {
             currentData = new BigDecimal(String.valueOf(data.getX().divide(data.getY(), 9, RoundingMode.HALF_UP)));
         }
-        if (data.getOp().equals(ConverterData.Procedure.MUL)) {
+        if (data.getOp().equals(MathematicalFunction.Procedure.MUL)) {
             currentData = new BigDecimal(String.valueOf(data.getX().multiply(data.getY())));
         }
-        if (data.getOp().equals(ConverterData.Procedure.FAC)) {
+        if (data.getOp().equals(MathematicalFunction.Procedure.FAC)) {
             currentData = calculateFactorial(data.getX());
         }
 

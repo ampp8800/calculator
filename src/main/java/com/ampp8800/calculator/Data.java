@@ -5,20 +5,20 @@ import java.math.BigDecimal;
 class Data {
     private BigDecimal x;
     private BigDecimal y;
-    private ConverterData.Procedure op;
+    private MathematicalFunction.Procedure op;
 
-    public Data(BigDecimal x, BigDecimal y, ConverterData.Procedure op) {
+    public Data(BigDecimal x, BigDecimal y, MathematicalFunction.Procedure op) {
         this.x = new BigDecimal(String.valueOf(x));
         this.y = new BigDecimal(String.valueOf(y));
         this.op = op;
     }
 
-    public Data(BigDecimal x, ConverterData.Procedure op) {
+    public Data(BigDecimal x, MathematicalFunction.Procedure op) {
         this.x = x;
         this.op = op;
     }
 
-    public Data(ConverterData.Procedure op) {
+    public Data(MathematicalFunction.Procedure op) {
         this.op = op;
     }
 
@@ -31,7 +31,7 @@ class Data {
         return y;
     }
 
-    public ConverterData.Procedure getOp() {
+    public MathematicalFunction.Procedure getOp() {
         return op;
     }
 
