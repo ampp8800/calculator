@@ -13,8 +13,8 @@ public class Calculator {
             System.out.println("Enter data in the format (A op B) or (A!)");
             while (true) {
                 Data data = ConverterData.dataConversion(reader.readLine());
-                if (!data.getOp().equals(MathematicalFunction.Procedure.ERROR)) {
-                    if (data.getOp().equals(MathematicalFunction.Procedure.EXIT)){
+                if (!MathematicalFunction.Procedure.ERROR.equals(data.getOp())) {
+                    if (MathematicalFunction.Procedure.EXIT.equals(data.getOp())) {
                         break;
                     }
                     BigDecimal bigDecimal = calculation(data);
@@ -31,19 +31,19 @@ public class Calculator {
     static BigDecimal calculation(Data data) {
         BigDecimal currentData = null;
 
-        if (data.getOp().equals(MathematicalFunction.Procedure.SUB)) {
+        if (MathematicalFunction.Procedure.SUB.equals(data.getOp())) {
             currentData = new BigDecimal(String.valueOf(data.getX().subtract(data.getY())));
         }
-        if (data.getOp().equals(MathematicalFunction.Procedure.SUM)) {
+        if (MathematicalFunction.Procedure.SUM.equals(data.getOp())) {
             currentData = new BigDecimal(String.valueOf(data.getX().add(data.getY())));
         }
-        if (data.getOp().equals(MathematicalFunction.Procedure.DIV)) {
+        if (MathematicalFunction.Procedure.DIV.equals(data.getOp())) {
             currentData = new BigDecimal(String.valueOf(data.getX().divide(data.getY(), 9, RoundingMode.HALF_UP)));
         }
-        if (data.getOp().equals(MathematicalFunction.Procedure.MUL)) {
+        if (MathematicalFunction.Procedure.MUL.equals(data.getOp())) {
             currentData = new BigDecimal(String.valueOf(data.getX().multiply(data.getY())));
         }
-        if (data.getOp().equals(MathematicalFunction.Procedure.FAC)) {
+        if (MathematicalFunction.Procedure.FAC.equals(data.getOp())) {
             currentData = calculateFactorial(data.getX());
         }
 

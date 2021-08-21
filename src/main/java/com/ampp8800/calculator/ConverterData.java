@@ -2,6 +2,7 @@ package com.ampp8800.calculator;
 
 
 import java.math.BigDecimal;
+import java.util.regex.Pattern;
 
 public class ConverterData {
 
@@ -20,7 +21,7 @@ public class ConverterData {
         } catch (Exception unused) {
             op = MathematicalFunction.Procedure.ERROR;
         }
-        if (op.equals(MathematicalFunction.Procedure.ERROR)) {
+        if ((MathematicalFunction.Procedure.ERROR).equals(op)) {
             System.out.println("Invalid input string format, re-enter expression");
         }
         return new Data(op);
@@ -31,17 +32,17 @@ public class ConverterData {
         BigDecimal x = new BigDecimal(0);
         BigDecimal y = new BigDecimal(0);
         MathematicalFunction.Procedure op = MathematicalFunction.Procedure.ERROR;
-        if (strData[1].equals(MathematicalFunction.Procedure.SUM.getProcedure()) || strData[1].equals(MathematicalFunction.Procedure.SUB.getProcedure()) || strData[1].equals(MathematicalFunction.Procedure.MUL.getProcedure()) || strData[1].equals(MathematicalFunction.Procedure.DIV.getProcedure())) {
+        if ((MathematicalFunction.Procedure.SUM).getProcedure().equals(strData[1]) || (MathematicalFunction.Procedure.SUB).getProcedure().equals(strData[1]) || (MathematicalFunction.Procedure.MUL).getProcedure().equals(strData[1]) || (MathematicalFunction.Procedure.DIV).getProcedure().equals(strData[1])) {
             x = new BigDecimal(strData[0]);
             op = MathematicalFunction.Procedure.setProcedure(strData[1]);
             y = new BigDecimal(strData[2]);
-            if (y.compareTo(new BigDecimal(0)) == 0 && op.equals(MathematicalFunction.Procedure.DIV)) {
+            if (y.compareTo(new BigDecimal(0)) == 0 && MathematicalFunction.Procedure.DIV.equals(op)) {
                 System.out.print("Division by zero. ");
                 op = MathematicalFunction.Procedure.ERROR;
             }
 
         }
-        if (op.equals(MathematicalFunction.Procedure.ERROR)) {
+        if (MathematicalFunction.Procedure.ERROR.equals(op)) {
             System.out.println("Invalid input string format, re-enter expression");
         }
         return new Data(x, y, op);
@@ -63,7 +64,7 @@ public class ConverterData {
         } else {
             op = exit(strData);
         }
-        if (op.equals(MathematicalFunction.Procedure.ERROR)) {
+        if (MathematicalFunction.Procedure.ERROR.equals(op)) {
             System.out.println("Invalid input string format, re-enter expression");
         }
         return new Data(x, op);
@@ -71,8 +72,11 @@ public class ConverterData {
 
     static MathematicalFunction.Procedure exit(String strData) {
         MathematicalFunction.Procedure op = MathematicalFunction.Procedure.ERROR;
-        if (strData.equals("exit") || strData.equals("q")) {
+
+        if (strData.equalsIgnoreCase("exit") || strData.equalsIgnoreCase("q")) {
+
             op = MathematicalFunction.Procedure.EXIT;
+            return op;
         }
         return op;
 
