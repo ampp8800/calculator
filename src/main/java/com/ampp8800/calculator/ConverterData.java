@@ -3,104 +3,83 @@ package com.ampp8800.calculator;
 
 import java.math.BigDecimal;
 
+
 public class ConverterData {
 
     static Data dataConversion(String str) {
-        Procedure op;
+        MathematicalFunction.Procedure op;
         try {
             String strData[] = str.split(" ");
             if (strData.length == 3) {
                 return simpleMathData(strData);
             } else if (strData.length == 1) {
-                return factorialData(strData);
+                return factorialData(strData[0]);
             } else {
-                op = Procedure.ERROR;
+                op = MathematicalFunction.Procedure.ERROR;
             }
 
         } catch (Exception unused) {
-            op = Procedure.ERROR;
+            op = MathematicalFunction.Procedure.ERROR;
         }
-        if (op.equals(Procedure.ERROR)) {
+        if ((MathematicalFunction.Procedure.ERROR).equals(op)) {
             System.out.println("Invalid input string format, re-enter expression");
         }
         return new Data(op);
     }
 
-    enum Procedure {
-        SUM("+"),
-        SUB("-"),
-        MUL("*"),
-        DIV("/"),
-        FAC("!"),
-        ERROR("error");
-        private String procedure;
-
-        Procedure(String procedure) {
-            this.procedure = procedure;
-        }
-
-        public String getProcedure() {
-            return procedure;
-        }
-
-        static Procedure setProcedure(String procedure) {
-            switch (procedure) {
-                case "+":
-                    return Procedure.SUM;
-                case "-":
-                    return Procedure.SUB;
-                case "*":
-                    return Procedure.MUL;
-                case "/":
-                    return Procedure.DIV;
-                case "!":
-                    return Procedure.FAC;
-                default:
-                    return Procedure.ERROR;
-            }
-
-        }
-
-    }
 
     static Data simpleMathData(String strData[]) {
         BigDecimal x = new BigDecimal(0);
         BigDecimal y = new BigDecimal(0);
-        Procedure op = Procedure.ERROR;
-        if (strData[1].equals(Procedure.SUM.getProcedure()) || strData[1].equals(Procedure.SUB.getProcedure()) || strData[1].equals(Procedure.MUL.getProcedure()) || strData[1].equals(Procedure.DIV.getProcedure())) {
+        MathematicalFunction.Procedure op = MathematicalFunction.Procedure.ERROR;
+        if ((MathematicalFunction.Procedure.SUM).getProcedure().equals(strData[1]) || (MathematicalFunction.Procedure.SUB).getProcedure().equals(strData[1]) || (MathematicalFunction.Procedure.MUL).getProcedure().equals(strData[1]) || (MathematicalFunction.Procedure.DIV).getProcedure().equals(strData[1])) {
             x = new BigDecimal(strData[0]);
-            op = Procedure.setProcedure(strData[1]);
+            op = MathematicalFunction.Procedure.setProcedure(strData[1]);
             y = new BigDecimal(strData[2]);
-            if (y.compareTo(new BigDecimal(0)) == 0 && op.equals(Procedure.DIV)) {
+            if (y.compareTo(new BigDecimal(0)) == 0 && MathematicalFunction.Procedure.DIV.equals(op)) {
                 System.out.print("Division by zero. ");
-                op = Procedure.ERROR;
+                op = MathematicalFunction.Procedure.ERROR;
             }
 
         }
-        if (op.equals(Procedure.ERROR)) {
+        if (MathematicalFunction.Procedure.ERROR.equals(op)) {
             System.out.println("Invalid input string format, re-enter expression");
         }
         return new Data(x, y, op);
     }
 
 
-    static Data factorialData(String strData[]) {
+    static Data factorialData(String strData) {
         BigDecimal x = new BigDecimal(0);
-        Procedure op = Procedure.ERROR;
-        if (strData[0].lastIndexOf('!') == (strData[0].length() - 1)) {
-            op = Procedure.FAC;
-            strData[0] = strData[0].substring(0, strData[0].length() - 1);
-            if (strData[0].indexOf(".") != -1 || strData[0].indexOf("-") != -1) {
-                op = Procedure.ERROR;
+        MathematicalFunction.Procedure op = MathematicalFunction.Procedure.ERROR;
+        if (strData.lastIndexOf('!') == (strData.length() - 1)) {
+            op = MathematicalFunction.Procedure.FAC;
+            strData = strData.substring(0, strData.length() - 1);
+            if (strData.indexOf(".") != -1 || strData.indexOf("-") != -1) {
+                op = MathematicalFunction.Procedure.ERROR;
                 System.out.print("To calculate the factorial. a positive integer is required (A!). ");
             } else {
-                x = new BigDecimal(strData[0]);
+                x = new BigDecimal(strData);
             }
+        } else {
+            op = exit(strData);
         }
-        if (op.equals(Procedure.ERROR)) {
+        if (MathematicalFunction.Procedure.ERROR.equals(op)) {
             System.out.println("Invalid input string format, re-enter expression");
         }
         return new Data(x, op);
+    }
+
+    static MathematicalFunction.Procedure exit(String strData) {
+        MathematicalFunction.Procedure op = MathematicalFunction.Procedure.ERROR;
+
+        if (("exit").equalsIgnoreCase(strData) || ("q").equalsIgnoreCase(strData)) {
+
+            op = MathematicalFunction.Procedure.EXIT;
+            return op;
+        }
+        return op;
+
     }
 
 }
