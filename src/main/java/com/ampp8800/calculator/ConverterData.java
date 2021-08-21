@@ -73,7 +73,7 @@ public class ConverterData {
     static MathematicalFunction.Procedure exit(String strData) {
         MathematicalFunction.Procedure op = MathematicalFunction.Procedure.ERROR;
 
-        if (strData.equalsIgnoreCase("exit") || strData.equalsIgnoreCase("q")) {
+        if (("exit").equalsIgnoreCase(strData) || ("q").equalsIgnoreCase(strData)) {
 
             op = MathematicalFunction.Procedure.EXIT;
             return op;
