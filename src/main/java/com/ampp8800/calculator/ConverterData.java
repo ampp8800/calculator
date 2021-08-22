@@ -1,6 +1,7 @@
 package com.ampp8800.calculator;
 
 
+import javax.management.StringValueExp;
 import java.math.BigDecimal;
 
 
@@ -42,9 +43,9 @@ public class ConverterData {
         BigDecimal y = new BigDecimal(0);
         MathematicalFunction.Procedure op = MathematicalFunction.Procedure.ERROR;
         if ((MathematicalFunction.Procedure.SUM).getProcedure().equals(strData[1]) || (MathematicalFunction.Procedure.SUB).getProcedure().equals(strData[1]) || (MathematicalFunction.Procedure.MUL).getProcedure().equals(strData[1]) || (MathematicalFunction.Procedure.DIV).getProcedure().equals(strData[1])) {
-            x = new BigDecimal(strData[0]);
+            x = appropriation(strData[0]);
+            y = appropriation(strData[2]);
             op = MathematicalFunction.Procedure.setProcedure(strData[1]);
-            y = new BigDecimal(strData[2]);
             if (y.compareTo(new BigDecimal(0)) == 0 && MathematicalFunction.Procedure.DIV.equals(op)) {
                 System.out.print("Division by zero. ");
                 op = MathematicalFunction.Procedure.ERROR;
@@ -68,7 +69,7 @@ public class ConverterData {
                 op = MathematicalFunction.Procedure.ERROR;
                 System.out.print("To calculate the factorial. a positive integer is required (A!). ");
             } else {
-                x = new BigDecimal(strData);
+                x = appropriation(strData);
             }
         } else {
             op = exit(strData);
@@ -116,6 +117,16 @@ public class ConverterData {
         } else {
             System.out.println("Cell not found");
         }
+    }
+
+    static BigDecimal appropriation (String string){
+        BigDecimal bigDecimal;
+        if (Repository.getCell(string) == null){
+            bigDecimal = new BigDecimal(string);
+        } else {
+            bigDecimal = Repository.getCell(string);
+        }
+        return bigDecimal;
     }
 
 }
