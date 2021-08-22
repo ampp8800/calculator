@@ -7,13 +7,22 @@ import java.math.BigDecimal;
 public class ConverterData {
 
     static Data dataConversion(String str) {
-        MathematicalFunction.Procedure op;
+        MathematicalFunction.Procedure op = MathematicalFunction.Procedure.ERROR;
         try {
             String strData[] = str.split(" ");
             if (strData.length == 3) {
                 return simpleMathData(strData);
             } else if (strData.length == 1) {
                 return factorialData(strData[0]);
+            } else if (strData.length == 2){
+                if (MathematicalFunction.Procedure.REM.getProcedure().equalsIgnoreCase(strData[0])){
+                    op = MathematicalFunction.Procedure.REM;
+                    recording(strData, Calculator.data, Calculator.result);
+                }
+                if (MathematicalFunction.Procedure.SHOW.getProcedure().equalsIgnoreCase(strData[0])){
+                    op = MathematicalFunction.Procedure.SHOW;
+                    reading(strData[1]);
+                }
             } else {
                 op = MathematicalFunction.Procedure.ERROR;
             }
@@ -55,7 +64,7 @@ public class ConverterData {
         if (strData.lastIndexOf('!') == (strData.length() - 1)) {
             op = MathematicalFunction.Procedure.FAC;
             strData = strData.substring(0, strData.length() - 1);
-            if (strData.indexOf(".") != -1 || strData.indexOf("-") != -1) {
+            if (strData.contains(".") || strData.contains("-")) {
                 op = MathematicalFunction.Procedure.ERROR;
                 System.out.print("To calculate the factorial. a positive integer is required (A!). ");
             } else {
@@ -80,6 +89,33 @@ public class ConverterData {
         }
         return op;
 
+    }
+
+    static void recording(String strData[], Data data, BigDecimal bigDecimal) {
+
+        if (!(data == null) && !(bigDecimal == null)) {
+            if (!(MathematicalFunction.Procedure.ERROR).equals(data.getOp())) {
+                try {
+                    Double.parseDouble(strData[1]);
+                    System.out.println("You cannot use numbers for the cell name");
+                } catch (Exception unused) {
+                    Repository.setCell(strData[1], bigDecimal);
+                    System.out.println("Add new cell");
+                }
+            } else {
+                System.out.println("No data to remember");
+            }
+        } else {
+            System.out.println("No data to remember");
+        }
+    }
+
+    static void reading (String string){
+        if (Repository.getCell(string) != null){
+            System.out.println(string + ": " + Repository.getCell(string));
+        } else {
+            System.out.println("Cell not found");
+        }
     }
 
 }

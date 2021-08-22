@@ -8,18 +8,22 @@ import java.math.RoundingMode;
 
 public class Calculator {
 
+    static BigDecimal result;
+    static Data data;
+
     public static void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             System.out.println("Enter data in the format (A op B) or (A!)");
             while (true) {
-                Data data = ConverterData.dataConversion(reader.readLine());
+                data = ConverterData.dataConversion(reader.readLine());
                 if (!MathematicalFunction.Procedure.ERROR.equals(data.getOp())) {
                     if (MathematicalFunction.Procedure.EXIT.equals(data.getOp())) {
                         break;
                     }
-                    BigDecimal bigDecimal = calculation(data);
-                    bigDecimal = transformation(bigDecimal);
-                    System.out.println(bigDecimal.toPlainString());
+                    if (!(MathematicalFunction.Procedure.REM.equals(data.getOp()) || MathematicalFunction.Procedure.SHOW.equals(data.getOp()))) {
+                        result = transformation(calculation(data));
+                        System.out.println(result.toPlainString());
+                    }
                 }
             }
 

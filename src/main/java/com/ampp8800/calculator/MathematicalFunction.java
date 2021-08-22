@@ -7,6 +7,8 @@ public class MathematicalFunction {
         MUL("*"),
         DIV("/"),
         FAC("!"),
+        REM("remembr"),
+        SHOW("show"),
         EXIT("exit"),
         ERROR("error");
         private String procedure;
@@ -31,6 +33,10 @@ public class MathematicalFunction {
                     return Procedure.DIV;
                 case "!":
                     return Procedure.FAC;
+                case "remembr":
+                    return Procedure.REM;
+                case "show":
+                    return Procedure.SHOW;
                 case "exit":
                     return Procedure.EXIT;
                 case "q":
