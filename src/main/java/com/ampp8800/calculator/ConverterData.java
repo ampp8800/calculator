@@ -12,16 +12,19 @@ public class ConverterData {
             String strData[] = str.split(" ");
             if (strData.length == 3) {
                 return simpleMathData(strData);
+
             } else if (strData.length == 1) {
                 if (strData[0].lastIndexOf('!') == (strData[0].length() - 1)) {
                     return factorialData(strData[0]);
                 } else if (MathematicalFunction.Procedure.DEL.getProcedure().equalsIgnoreCase(strData[0])) {
                     Repository.removeRepository();
                     op = MathematicalFunction.Procedure.DEL;
+                } else if (MathematicalFunction.Procedure.HELP.getProcedure().equalsIgnoreCase(strData[0])) {
+                    help();
+                    op = MathematicalFunction.Procedure.HELP;
                 } else {
                     op = exit(strData[0]);
                 }
-
 
             } else if (strData.length == 2) {
                 if (MathematicalFunction.Procedure.REM.getProcedure().equalsIgnoreCase(strData[0])) {
@@ -32,6 +35,7 @@ public class ConverterData {
                     op = MathematicalFunction.Procedure.SHOW;
                     reading(strData[1]);
                 }
+
             } else {
                 op = MathematicalFunction.Procedure.ERROR;
             }
@@ -104,8 +108,12 @@ public class ConverterData {
                     Double.parseDouble(strData[1]);
                     System.out.println("You cannot use numbers for the cell name");
                 } catch (Exception unused) {
-                    Repository.setCell(strData[1], bigDecimal);
-                    System.out.println("Add new cell");
+                    if (strData[1].lastIndexOf('!') != (strData[1].length() - 1)) {
+                        Repository.setCell(strData[1], bigDecimal);
+                        System.out.println("Add new cell");
+                    } else {
+                        System.out.println("You cannot use an exclamation mark at the end of a cell name");
+                    }
                 }
             } else {
                 System.out.println("No data to remember");
@@ -133,4 +141,13 @@ public class ConverterData {
         return bigDecimal;
     }
 
+    static void help(){
+        System.out.println("the calculator has the following functions");
+        System.out.println("possible operators in expression (A op B): +, -, *, /");
+        System.out.println("calculate factorial (A): A!");
+        System.out.println("create a cell named A: remembr A");
+        System.out.println("show cell named A: show A");
+        System.out.println("clear data store: removeall");
+        System.out.println("exit the program: exit, q");
+    }
 }

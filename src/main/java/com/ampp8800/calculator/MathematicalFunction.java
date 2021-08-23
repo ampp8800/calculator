@@ -11,7 +11,8 @@ public class MathematicalFunction {
         SHOW("show"),
         EXIT("exit"),
         ERROR("error"),
-        DEL("removeall");
+        DEL("removeall"),
+        HELP("help");
         private String procedure;
 
         Procedure(String procedure) {
@@ -44,6 +45,8 @@ public class MathematicalFunction {
                     return Procedure.EXIT;
                 case "removeall":
                     return Procedure.DEL;
+                case "help":
+                    return Procedure.HELP;
                 default:
                     return Procedure.ERROR;
             }

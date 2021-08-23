@@ -20,7 +20,7 @@ public class Calculator {
                     if (MathematicalFunction.Procedure.EXIT.equals(data.getOp())) {
                         break;
                     }
-                    if (!(MathematicalFunction.Procedure.REM.equals(data.getOp()) || MathematicalFunction.Procedure.SHOW.equals(data.getOp()) || MathematicalFunction.Procedure.DEL.equals(data.getOp()))) {
+                    if (!(MathematicalFunction.Procedure.REM.equals(data.getOp()) || MathematicalFunction.Procedure.SHOW.equals(data.getOp()) || MathematicalFunction.Procedure.DEL.equals(data.getOp()) || MathematicalFunction.Procedure.HELP.equals(data.getOp()))) {
                         result = transformation(calculation(data));
                         System.out.println(result.toPlainString());
                     }
