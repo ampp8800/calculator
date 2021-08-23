@@ -10,7 +10,8 @@ public class MathematicalFunction {
         REM("remembr"),
         SHOW("show"),
         EXIT("exit"),
-        ERROR("error");
+        ERROR("error"),
+        DEL("removeall");
         private String procedure;
 
         Procedure(String procedure) {
@@ -41,6 +42,8 @@ public class MathematicalFunction {
                     return Procedure.EXIT;
                 case "q":
                     return Procedure.EXIT;
+                case "removeall":
+                    return Procedure.DEL;
                 default:
                     return Procedure.ERROR;
             }

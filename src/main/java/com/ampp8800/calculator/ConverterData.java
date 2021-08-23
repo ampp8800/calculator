@@ -1,7 +1,6 @@
 package com.ampp8800.calculator;
 
 
-import javax.management.StringValueExp;
 import java.math.BigDecimal;
 
 
@@ -14,13 +13,22 @@ public class ConverterData {
             if (strData.length == 3) {
                 return simpleMathData(strData);
             } else if (strData.length == 1) {
-                return factorialData(strData[0]);
-            } else if (strData.length == 2){
-                if (MathematicalFunction.Procedure.REM.getProcedure().equalsIgnoreCase(strData[0])){
+                if (strData[0].lastIndexOf('!') == (strData[0].length() - 1)) {
+                    return factorialData(strData[0]);
+                } else if (MathematicalFunction.Procedure.DEL.getProcedure().equalsIgnoreCase(strData[0])) {
+                    Repository.removeRepository();
+                    op = MathematicalFunction.Procedure.DEL;
+                } else {
+                    op = exit(strData[0]);
+                }
+
+
+            } else if (strData.length == 2) {
+                if (MathematicalFunction.Procedure.REM.getProcedure().equalsIgnoreCase(strData[0])) {
                     op = MathematicalFunction.Procedure.REM;
                     recording(strData, Calculator.data, Calculator.result);
                 }
-                if (MathematicalFunction.Procedure.SHOW.getProcedure().equalsIgnoreCase(strData[0])){
+                if (MathematicalFunction.Procedure.SHOW.getProcedure().equalsIgnoreCase(strData[0])) {
                     op = MathematicalFunction.Procedure.SHOW;
                     reading(strData[1]);
                 }
@@ -61,19 +69,15 @@ public class ConverterData {
 
     static Data factorialData(String strData) {
         BigDecimal x = new BigDecimal(0);
-        MathematicalFunction.Procedure op = MathematicalFunction.Procedure.ERROR;
-        if (strData.lastIndexOf('!') == (strData.length() - 1)) {
-            op = MathematicalFunction.Procedure.FAC;
-            strData = strData.substring(0, strData.length() - 1);
-            if (strData.contains(".") || strData.contains("-")) {
-                op = MathematicalFunction.Procedure.ERROR;
-                System.out.print("To calculate the factorial. a positive integer is required (A!). ");
-            } else {
-                x = appropriation(strData);
-            }
+        MathematicalFunction.Procedure op = MathematicalFunction.Procedure.FAC;
+        strData = strData.substring(0, strData.length() - 1);
+        if (strData.contains(".") || strData.contains("-")) {
+            op = MathematicalFunction.Procedure.ERROR;
+            System.out.print("To calculate the factorial. a positive integer is required (A!). ");
         } else {
-            op = exit(strData);
+            x = appropriation(strData);
         }
+
         if (MathematicalFunction.Procedure.ERROR.equals(op)) {
             System.out.println("Invalid input string format, re-enter expression");
         }
@@ -111,17 +115,17 @@ public class ConverterData {
         }
     }
 
-    static void reading (String string){
-        if (Repository.getCell(string) != null){
+    static void reading(String string) {
+        if (Repository.getCell(string) != null) {
             System.out.println(string + ": " + Repository.getCell(string));
         } else {
             System.out.println("Cell not found");
         }
     }
 
-    static BigDecimal appropriation (String string){
+    static BigDecimal appropriation(String string) {
         BigDecimal bigDecimal;
-        if (Repository.getCell(string) == null){
+        if (Repository.getCell(string) == null) {
             bigDecimal = new BigDecimal(string);
         } else {
             bigDecimal = Repository.getCell(string);
