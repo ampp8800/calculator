@@ -145,7 +145,7 @@ public class ConverterData {
         System.out.println("the calculator has the following functions");
         System.out.println("possible operators in expression (A op B): +, -, *, /");
         System.out.println("calculate factorial (A): A!");
-        System.out.println("create a cell named A: remembr A");
+        System.out.println("create a cell named A: remember A");
         System.out.println("show cell named A: show A");
         System.out.println("clear data store: removeall");
         System.out.println("exit the program: exit, q");
