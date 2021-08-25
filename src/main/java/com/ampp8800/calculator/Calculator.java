@@ -1,9 +1,11 @@
 package com.ampp8800.calculator;
 
+
+
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Map;
+
 
 public class Calculator {
 
@@ -11,7 +13,7 @@ public class Calculator {
     static Data data;
 
     public static void main(String[] args) {
-        readFile();
+        FileWorker.readFile();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             System.out.println("Enter data in the format (A op B) or (A!)");
             while (true) {
@@ -24,12 +26,15 @@ public class Calculator {
                         result = transformation(calculation(data));
                         System.out.println(result.toPlainString());
                     }
+                } else {
+                    System.out.println("Invalid input string format, re-enter expression");
+                    System.out.println("Operation: A op B, A!; Commands: help, remember, show, removeall, exit/q");
                 }
             }
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-        writeFile();
+        FileWorker.writeFile();
 
     }
 
@@ -69,27 +74,6 @@ public class Calculator {
         }
         result = new BigDecimal(String.valueOf(bigDecimal.multiply(calculateFactorial(bigDecimal.subtract(BigDecimal.valueOf(1))))));
         return result;
-    }
-
-    static void readFile() {
-        try (BufferedReader fileReader = new BufferedReader(new FileReader("Repository.txt"))) {
-            while (true) {
-                String line[] = fileReader.readLine().split("=");
-                BigDecimal bigDecimal = new BigDecimal(line[1]);
-                Repository.setCell(line[0], bigDecimal);
-            }
-        } catch (Exception unused) {
-        }
-    }
-
-    static void writeFile() {
-        try (FileWriter writer = new FileWriter("Repository.txt", false)) {
-            for (Map.Entry<String, BigDecimal> entry : Repository.getRepository().entrySet()) {
-                writer.write(entry + "\n");
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
     }
 
 }

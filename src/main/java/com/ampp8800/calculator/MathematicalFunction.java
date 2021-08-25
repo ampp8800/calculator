@@ -1,8 +1,19 @@
 package com.ampp8800.calculator;
 
 public class MathematicalFunction {
+    private static final String SUM = "+";
+    private static final String SUB = "-";
+    private static final String MUL = "*";
+    private static final String DIV = "/";
+    private static final String FAC = "!";
+    private static final String REM = "remeber";
+    private static final String SHOW = "show";
+    private static final String EXIT = "exit";
+    private static final String ERROR = "error";
+    private static final String DEL = "removeall";
+    private static final String HELP = "help";
     enum Procedure {
-        SUM("+"),
+        SUM(MathematicalFunction.SUM),
         SUB("-"),
         MUL("*"),
         DIV("/"),
@@ -25,27 +36,27 @@ public class MathematicalFunction {
 
         static Procedure setProcedure(String procedure) {
             switch (procedure) {
-                case "+":
+                case MathematicalFunction.SUM:
                     return Procedure.SUM;
-                case "-":
+                case MathematicalFunction.SUB:
                     return Procedure.SUB;
-                case "*":
+                case MathematicalFunction.MUL:
                     return Procedure.MUL;
-                case "/":
+                case MathematicalFunction.DIV:
                     return Procedure.DIV;
-                case "!":
+                case MathematicalFunction.FAC:
                     return Procedure.FAC;
-                case "remember":
+                case MathematicalFunction.REM:
                     return Procedure.REM;
-                case "show":
+                case MathematicalFunction.SHOW:
                     return Procedure.SHOW;
-                case "exit":
+                case MathematicalFunction.EXIT:
                     return Procedure.EXIT;
                 case "q":
                     return Procedure.EXIT;
-                case "removeall":
+                case MathematicalFunction.DEL:
                     return Procedure.DEL;
-                case "help":
+                case MathematicalFunction.HELP:
                     return Procedure.HELP;
                 default:
                     return Procedure.ERROR;
