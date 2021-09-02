@@ -13,8 +13,7 @@ class FileWorker {
             while (true) {
                 String line[] = fileReader.readLine().split("=");
                 BigDecimal bigDecimal = new BigDecimal(line[1]);
-                Repository.setCell(line[0], bigDecimal);
-
+                RepositoryWorker.setCell(line[0], bigDecimal);
             }
         } catch (Exception unused) {
         }
@@ -23,7 +22,7 @@ class FileWorker {
 
     static void writeFile() {
         try (FileWriter writer = new FileWriter("Repository.txt", false)) {
-            for (Map.Entry<String, BigDecimal> entry : Repository.getRepository().entrySet()) {
+            for (Map.Entry<String, BigDecimal> entry : RepositoryWorker.getRepository().entrySet()) {
                 writer.write(entry + "\n");
 
             }

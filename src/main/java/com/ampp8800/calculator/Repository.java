@@ -25,7 +25,6 @@ public class Repository {
         for (Map.Entry<String, BigDecimal> entry : copy.entrySet()) {
             repository.remove(entry.getKey());
         }
-        System.out.println("Repository cleared");
     }
 
 }

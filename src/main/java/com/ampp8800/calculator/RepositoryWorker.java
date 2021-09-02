@@ -1,34 +1,34 @@
 package com.ampp8800.calculator;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 
 public class RepositoryWorker {
-    static void recording(String strData[], Data data, BigDecimal bigDecimal) {
 
-        if (!(data == null) && !(bigDecimal == null) && !bigDecimal.equals(null)) {
+    static String recording(String strData) {
+        if (Calculator.result != null) {
             try {
-                Double.parseDouble(strData[1]);
-                System.out.println("You cannot use numbers for the cell name");
+                Double.parseDouble(strData);
+                return "You cannot use numbers for the cell name";
             } catch (Exception unused) {
-                if (strData[1].lastIndexOf('!') != (strData[1].length() - 1)) {
-                    Repository.setCell(strData[1], bigDecimal);
-                    System.out.print("Add new cell ");
-                    reading(strData[1]);
+                if (strData.lastIndexOf('!') != (strData.length() - 1)) {
+                    Repository.setCell(strData, Calculator.result);
+                    return ("Add new cell " + reading(strData));
+
                 } else {
-                    System.out.println("You cannot use an exclamation mark at the end of a cell name");
+                    return "You cannot use an exclamation mark at the end of a cell name";
                 }
             }
-        } else {
-            System.out.println("No data to remember");
         }
+        return "No data to remember";
     }
 
-    static void reading(String string) {
+    static String reading(String string) {
         if (Repository.getCell(string) != null) {
-            System.out.println(string + ": " + Repository.getCell(string).toPlainString());
-        } else {
-            System.out.println("Cell not found");
+            return (string + ": " + Repository.getCell(string).toPlainString());
         }
+        return "Cell not found";
+
     }
 
     static BigDecimal appropriation(String string) {
@@ -41,13 +41,15 @@ public class RepositoryWorker {
         return bigDecimal;
     }
 
-    static void help(){
-        System.out.println("the calculator has the following functions");
-        System.out.println("possible operators in expression (A op B): +, -, *, /");
-        System.out.println("calculate factorial (A): A!");
-        System.out.println("create a cell named A: remember A");
-        System.out.println("show cell named A: show A");
-        System.out.println("clear data store: removeall");
-        System.out.println("exit the program: exit, q");
+    public static void setCell(String string, BigDecimal bigDecimal) {
+        Repository.setCell(string, bigDecimal);
+    }
+
+    public static HashMap<String, BigDecimal> getRepository() {
+        return Repository.getRepository();
+    }
+
+    public static void removeAll() {
+        Repository.removeRepository();
     }
 }

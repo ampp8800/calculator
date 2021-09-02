@@ -5,23 +5,28 @@ import java.math.BigDecimal;
 class Data {
     private BigDecimal x;
     private BigDecimal y;
-    private MathematicalFunction.Procedure op;
+    private String str;
+    private Operation.Command op;
 
-    public Data(BigDecimal x, BigDecimal y, MathematicalFunction.Procedure op) {
+    public Data(BigDecimal x, BigDecimal y, Operation.Command op) {
         this.x = new BigDecimal(String.valueOf(x));
         this.y = new BigDecimal(String.valueOf(y));
         this.op = op;
     }
 
-    public Data(BigDecimal x, MathematicalFunction.Procedure op) {
+    public Data(String str, Operation.Command op) {
+        this.str = str;
+        this.op = op;
+    }
+
+    public Data(BigDecimal x, Operation.Command op) {
         this.x = x;
         this.op = op;
     }
 
-    public Data(MathematicalFunction.Procedure op) {
+    public Data(Operation.Command op) {
         this.op = op;
     }
-
 
     public BigDecimal getX() {
         return x;
@@ -31,7 +36,11 @@ class Data {
         return y;
     }
 
-    public MathematicalFunction.Procedure getOp() {
+    public String getStr() {
+        return str;
+    }
+
+    public Operation.Command getOp() {
         return op;
     }
 
