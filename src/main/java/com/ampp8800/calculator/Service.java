@@ -1,24 +1,34 @@
 package com.ampp8800.calculator;
 
-
 public class Service {
 
-    public static String definition(Data data) {
+    public static Warehouse definition(Data data) {
         if (Operation.Command.REMEMBER.equals(data.getOp())) {
-            return RepositoryWorker.recording(data.getStr());
+            if (data.getStr() != null) {
+                return new Warehouse(RepositoryWorker.recording(data.getStr()));
+            }
         }
         if (Operation.Command.SHOW.equals(data.getOp())) {
-            return RepositoryWorker.reading(data.getStr());
+            if (data.getStr() != null) {
+                return new Warehouse(RepositoryWorker.reading(data.getStr()));
+            }
         }
         if (Operation.Command.EXIT.equals(data.getOp())) {
-            return "close calculator";
+            if (data.getStr() == null) {
+                return new Warehouse("close calculator", true);
+            }
         }
         if (Operation.Command.REMOVE_ALL.equals(data.getOp())) {
-            RepositoryWorker.removeAll();
-            return "repository clear";
+            if (data.getStr() == null) {
+                RepositoryWorker.removeAll();
+                return new Warehouse("repository clear");
+            }
         }
         if (Operation.Command.HELP.equals(data.getOp())) {
-            UserStreamProcesson.help();
+            if (data.getStr() == null) {
+                UserStreamProcesson.help();
+                return new Warehouse();
+            }
         }
         return null;
     }

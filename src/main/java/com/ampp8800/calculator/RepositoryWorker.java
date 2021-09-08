@@ -6,13 +6,13 @@ import java.util.HashMap;
 public class RepositoryWorker {
 
     static String recording(String strData) {
-        if (Calculator.result != null) {
+        if (Calculator.warehouse.getResultBD() != null) {
             try {
                 Double.parseDouble(strData);
                 return "You cannot use numbers for the cell name";
             } catch (Exception unused) {
                 if (strData.lastIndexOf('!') != (strData.length() - 1)) {
-                    Repository.setCell(strData, Calculator.result);
+                    Repository.setCell(strData, Calculator.warehouse.getResultBD());
                     return ("Add new cell " + reading(strData));
 
                 } else {
@@ -34,7 +34,11 @@ public class RepositoryWorker {
     static BigDecimal appropriation(String string) {
         BigDecimal bigDecimal;
         if (Repository.getCell(string) == null) {
-            bigDecimal = new BigDecimal(string);
+            try {
+                bigDecimal = new BigDecimal(string);
+            } catch (Exception e) {
+                bigDecimal = null;
+            }
         } else {
             bigDecimal = Repository.getCell(string);
         }

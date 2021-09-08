@@ -3,7 +3,7 @@ package com.ampp8800.calculator;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class Math {
+public class MathCommandProcessor {
     public static BigDecimal definition(Data data) {
         if (data.getY() == null) {
             if (Operation.Command.FACTORIAL.equals(data.getOp())) {

@@ -1,30 +1,36 @@
 package com.ampp8800.calculator;
 
-import java.math.BigDecimal;
-
 public class Calculator {
 
-    static BigDecimal result;
+
+    static Warehouse warehouse;
     static Data data;
 
     public static void main(String[] args) {
         FileWorker.readFile();
         System.out.println("Enter data in the format (A op B) or (A!)");
         while (true) {
-            try {
-                data = UserStreamProcesson.inputData();
-                data = CommandProcessor.treatment(data);
-                result = data.getX();
-                if (result != null) {
-                    System.out.println(result.toPlainString());
+            data = UserStreamProcesson.inputData();
+            if (data != null) {
+                if (data.getOp() == null) {
+                    System.out.println("Invalid input string format, re-enter expression. Operation: A op B / A!, Commands: remember, show, removeall, exit/q");
+                    continue;
                 }
-                if (data.getStr() != null) {
-                    System.out.println(data.getStr());
+                warehouse = CommandProcessor.treatment(data);
+                if (warehouse != null) {
+                    if (warehouse.getResultBD() != null) {
+                        System.out.println(warehouse.getResultBD().toPlainString());
+                    }
+                    if (warehouse.getResultStr() != null) {
+                        System.out.println(warehouse.getResultStr());
+                    }
+                    if (warehouse.getExit()) {
+                        break;
+                    }
+                } else {
+                    System.out.println("Invalid input string format, re-enter expression. Operation: A op B / A!, Commands: remember, show, removeall, exit/q");
                 }
-                if (Operation.Command.EXIT.equals(data.getOp())) {
-                    break;
-                }
-            } catch (Exception exception) {
+            } else {
                 System.out.println("Invalid input string format, re-enter expression. Operation: A op B / A!, Commands: remember, show, removeall, exit/q");
             }
         }
@@ -38,5 +44,3 @@ public class Calculator {
     }
 
 }
-
-

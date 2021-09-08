@@ -1,15 +1,17 @@
 package com.ampp8800.calculator;
 
 public class CommandProcessor {
-    public static Data treatment(Data data) {
-        if (Operation.CommandType.MATH.equals(data.getOp().getCommandType())) {
-            return new Data(Math.definition(data), data.getOp());
-
-        }
-        if (Operation.CommandType.SERVICE.equals(data.getOp().getCommandType())) {
-            return new Data(Service.definition(data), data.getOp());
+    public static Warehouse treatment(Data data) {
+        if (data != null) {
+            if (data.getOp() != null) {
+                if (Operation.CommandType.MATH.equals(data.getOp().getCommandType())) {
+                    return new Warehouse(MathCommandProcessor.definition(data));
+                }
+                if (Operation.CommandType.SERVICE.equals(data.getOp().getCommandType())) {
+                    return Service.definition(data);
+                }
+            }
         }
         return null;
-
     }
 }

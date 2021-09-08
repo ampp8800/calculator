@@ -9,8 +9,8 @@ class Data {
     private Operation.Command op;
 
     public Data(BigDecimal x, BigDecimal y, Operation.Command op) {
-        this.x = new BigDecimal(String.valueOf(x));
-        this.y = new BigDecimal(String.valueOf(y));
+        this.x = x;
+        this.y = y;
         this.op = op;
     }
 

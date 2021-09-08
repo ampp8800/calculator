@@ -9,47 +9,67 @@ public class UserStreamProcesson {
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public static Data inputData() {
-        Operation.Command op = null;
+        Data data = null;
         try {
-
             String strData[] = UserStreamProcesson.reader.readLine().split(" ");
-
-
             if (strData.length == 3) {
-                BigDecimal x = RepositoryWorker.appropriation(strData[0]);
-                BigDecimal y = RepositoryWorker.appropriation(strData[2]);
-                op = Operation.Command.getFromString(strData[1]);
-                if (!Operation.CommandType.MATH.equals(op.getCommandType())) {
-                    op = null;
-                }
-                return new Data(x, y, op);
-            }
-
-            if (strData.length == 2) {
-                op = Operation.Command.getFromString(strData[0]);
-                if (!Operation.CommandType.SERVICE.equals(op.getCommandType())) {
-                    op = null;
-                }
-                return new Data(strData[1], op);
-            }
-
-            if (strData.length == 1) {
-                if (strData[0].lastIndexOf(Operation.Command.FACTORIAL.getOperation()) == (strData[0].length() - 1)) {
-                    op = Operation.Command.FACTORIAL;
-                    BigDecimal x = RepositoryWorker.appropriation(strData[0].substring(0, strData[0].length() - 1));
-                    return new Data(x, op);
-                }
-                op = Operation.Command.getFromString(strData[0]);
-                if (!Operation.CommandType.SERVICE.equals(op.getCommandType())) {
-                    op = null;
-                }
-                return new Data(op);
+                data = getMathData(strData);
+            } else if (strData.length == 2) {
+                data = getServiceData(strData);
+            } else if (strData.length == 1) {
+                data = getFactorialOrServiceData(strData);
             }
 
         } catch (IOException exception) {
             exception.printStackTrace();
         }
 
+        return data;
+    }
+
+    public static Data getMathData(String[] strData) {
+        BigDecimal x = null;
+        BigDecimal y = null;
+        Operation.Command op = Operation.Command.getFromString(strData[1]);
+        if (op != null) {
+            if (Operation.CommandType.MATH.equals(op.getCommandType())) {
+                x = RepositoryWorker.appropriation(strData[0]);
+                y = RepositoryWorker.appropriation(strData[2]);
+                if (x == null || y == null) {
+                    op = null;
+                }
+            } else {
+                op = null;
+            }
+
+        }
+        return new Data(x, y, op);
+    }
+
+    public static Data getServiceData(String[] strData) {
+        Operation.Command op = Operation.Command.getFromString(strData[0]);
+        if (op != null) {
+            if (!Operation.CommandType.SERVICE.equals(op.getCommandType())) {
+                op = null;
+            }
+        }
+        return new Data(strData[1], op);
+    }
+
+    public static Data getFactorialOrServiceData(String[] strData) {
+        if (strData[0].length() > 1) {
+            if (strData[0].lastIndexOf(Operation.Command.FACTORIAL.getOperation()[0]) == (strData[0].length() - 1)) {
+                Operation.Command op = Operation.Command.FACTORIAL;
+                BigDecimal bigDecimal = RepositoryWorker.appropriation(strData[0].substring(0, strData[0].length() - 1));
+                return new Data(bigDecimal, op);
+            }
+        }
+        Operation.Command op = Operation.Command.getFromString(strData[0]);
+        if (op != null) {
+            if (!Operation.CommandType.SERVICE.equals(op.getCommandType())) {
+                op = null;
+            }
+        }
         return new Data(op);
     }
 
