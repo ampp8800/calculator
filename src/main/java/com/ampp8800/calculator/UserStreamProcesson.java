@@ -59,8 +59,17 @@ public class UserStreamProcesson {
     public static Data getFactorialOrServiceData(String[] strData) {
         if (strData[0].length() > 1) {
             if (strData[0].lastIndexOf(Operation.Command.FACTORIAL.getOperation()[0]) == (strData[0].length() - 1)) {
-                Operation.Command op = Operation.Command.FACTORIAL;
-                BigDecimal bigDecimal = RepositoryWorker.appropriation(strData[0].substring(0, strData[0].length() - 1));
+                Operation.Command op = null;
+                BigDecimal bigDecimal = null;
+                if (strData[0].indexOf(".") != -1 || strData[0].indexOf("-") != -1) {
+                    op = null;
+                    System.out.print("To calculate the factorial. a positive integer is required (A!). ");
+                } else {
+                    bigDecimal = RepositoryWorker.appropriation(strData[0].substring(0, strData[0].length() - 1));
+                    if (bigDecimal != null) {
+                        op = Operation.Command.FACTORIAL;
+                    }
+                }
                 return new Data(bigDecimal, op);
             }
         }
